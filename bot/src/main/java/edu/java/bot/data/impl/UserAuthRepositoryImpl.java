@@ -6,7 +6,6 @@ import edu.java.core.response.ApiErrorResponse;
 import edu.java.core.util.ApiQualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.retry.ExhaustedRetryException;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;

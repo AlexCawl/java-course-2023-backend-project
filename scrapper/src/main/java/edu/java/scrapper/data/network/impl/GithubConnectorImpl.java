@@ -4,14 +4,12 @@ import edu.java.core.response.github.CommitResponse;
 import edu.java.core.response.github.RepositoryResponse;
 import edu.java.core.util.ApiQualifier;
 import edu.java.scrapper.data.network.GithubConnector;
-import java.time.Duration;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.util.retry.Retry;
 
 @Component
 public class GithubConnectorImpl implements GithubConnector {
