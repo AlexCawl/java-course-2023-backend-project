@@ -3,10 +3,15 @@ package edu.java.bot;
 import com.pengrad.telegrambot.model.User;
 import edu.java.bot.data.LinkTrackerRepository;
 import edu.java.bot.data.UserAuthRepository;
-import edu.java.bot.domain.*;
+import edu.java.bot.domain.RegisterUserUseCase;
+import edu.java.bot.domain.TrackLinkUseCase;
+import edu.java.bot.domain.UntrackLinkUseCase;
+import edu.java.bot.domain.ViewLinksUseCase;
 import edu.java.bot.domain.model.ErrorTelegramResponse;
 import edu.java.bot.domain.model.TelegramResponse;
 import edu.java.core.exception.ApiErrorException;
+import edu.java.core.response.LinkResponse;
+import edu.java.core.response.ListLinksResponse;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,7 +70,7 @@ public class DomainLayerTest {
         @BeforeEach
         public void setupTrackLinks() {
             Mockito.lenient().doThrow(ApiErrorException.class).when(linkTrackerRepository)
-                .setLinkTracked(456L, "onlyfans.com");
+                    .setLinkTracked(456L, "onlyfans.com");
         }
 
         @Test
@@ -81,7 +86,7 @@ public class DomainLayerTest {
         @BeforeEach
         public void setupUntrackLinks() {
             Mockito.lenient().doThrow(ApiErrorException.class).when(linkTrackerRepository)
-                .setLinkUntracked(456L, "onlyfans.com");
+                    .setLinkUntracked(456L, "onlyfans.com");
         }
 
         @Test
@@ -97,9 +102,17 @@ public class DomainLayerTest {
         @BeforeEach
         public void setupGetSubscriptions() {
             Mockito.lenient().when(linkTrackerRepository.getUserTrackedLinks(123L))
-                .thenReturn(List.of("stackoverflow.com", "github.com"));
+                    .thenReturn(
+                            new ListLinksResponse(
+                                    List.of(
+                                            new LinkResponse(1L, "stackoverflow.com"),
+                                            new LinkResponse(2L, "github.com")
+                                    ),
+                                    2
+                            )
+                    );
             Mockito.lenient().when(linkTrackerRepository.getUserTrackedLinks(456L))
-                .thenThrow(ApiErrorException.class);
+                    .thenThrow(ApiErrorException.class);
         }
 
         @Test

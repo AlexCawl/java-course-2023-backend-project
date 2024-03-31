@@ -5,6 +5,7 @@ import edu.java.bot.data.LinkTrackerRepository;
 import edu.java.bot.domain.model.ErrorTelegramResponse;
 import edu.java.bot.domain.model.TelegramResponse;
 import edu.java.core.exception.ApiErrorException;
+import edu.java.core.response.LinkResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +16,16 @@ public class ViewLinksUseCase {
 
     public TelegramResponse viewLinks(User user) {
         try {
-            return new TelegramResponse(String.join("\n", repository.getUserTrackedLinks(user.id())));
+            return new TelegramResponse(
+                    String.join(
+                            "\n",
+                            repository.getUserTrackedLinks(user.id()).links().stream().map(LinkResponse::url).toList()
+                    )
+            );
         } catch (ApiErrorException exception) {
             return new ErrorTelegramResponse(exception);
+        } catch (Exception exception) {
+            return new TelegramResponse(String.format("Unable to connect... [%s]", exception.getClass()));
         }
     }
 }

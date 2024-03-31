@@ -19,6 +19,8 @@ public class RegisterUserUseCase {
             return new TelegramResponse("Registration successful");
         } catch (ApiErrorException exception) {
             return new ErrorTelegramResponse(exception);
+        } catch (Exception exception) {
+            return new TelegramResponse(String.format("Unable to connect... [%s]", exception.getClass()));
         }
     }
 }
