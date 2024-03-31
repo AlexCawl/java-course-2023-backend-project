@@ -9,21 +9,21 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 public record ApplicationConfig(
     @NotNull
-    SchedulerConfiguration scheduler,
+    Scheduler scheduler,
 
     @NotNull
-    ApiConfiguration api,
+    Api api,
 
     @NotNull
     DatabaseAccessType databaseAccessType,
 
     @NotNull
-    NetworkRetryConfiguration retry
+    Retry retry
 ) {
-    public record SchedulerConfiguration(boolean enable, @NotNull Duration interval, @NotNull Duration linkExpiration) {
+    public record Scheduler(boolean enable, @NotNull Duration interval, @NotNull Duration linkExpiration) {
     }
 
-    public record ApiConfiguration(@NotNull String github, @NotNull String stackOverflow, @NotNull String bot) {
+    public record Api(@NotNull String github, @NotNull String stackOverflow, @NotNull String bot) {
     }
 
     public enum DatabaseAccessType {
@@ -31,10 +31,15 @@ public record ApplicationConfig(
         JPA
     }
 
-    public record NetworkRetryConfiguration(
+    public record Retry(
+            @NotNull
             Integer maxAttempts,
+
+            @NotNull
             RetryType type,
-            NetworkDelayConfiguration delayConfig
+
+            @NotNull
+            Delay delay
     ) {
         public enum RetryType {
             FIXED,
@@ -42,23 +47,23 @@ public record ApplicationConfig(
             EXPONENTIAL
         }
 
-        public record NetworkDelayConfiguration(
-                FixedDelayConfiguration fixed,
-                LinearDelayConfiguration linear,
-                ExponentialDelayConfiguration exponential
+        public record Delay(
+                Fixed fixed,
+                Linear linear,
+                Exponential exponential
         ) {
-            public record FixedDelayConfiguration(
-                    Duration backOffPeriodDuration
+            public record Fixed(
+                    Duration intervalDuration
             ) {
             }
 
-            public record LinearDelayConfiguration(
+            public record Linear(
                     Duration initialIntervalDuration,
                     Duration maxIntervalDuration
             ) {
             }
 
-            public record ExponentialDelayConfiguration(
+            public record Exponential(
                     Duration initialIntervalDuration,
                     Duration maxIntervalDuration
             ) {

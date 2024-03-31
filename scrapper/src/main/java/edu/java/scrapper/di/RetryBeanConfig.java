@@ -18,7 +18,7 @@ public class RetryBeanConfig {
         SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy(config.retry().maxAttempts());
         FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
 
-        backOffPolicy.setBackOffPeriod(config.retry().delayConfig().fixed().backOffPeriodDuration().toMillis());
+        backOffPolicy.setBackOffPeriod(config.retry().delay().fixed().intervalDuration().toMillis());
         template.setRetryPolicy(retryPolicy);
         template.setBackOffPolicy(backOffPolicy);
         return template;
@@ -31,8 +31,8 @@ public class RetryBeanConfig {
         SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy(config.retry().maxAttempts());
         LinearBackOffPolicy backOffPolicy = new LinearBackOffPolicy();
 
-        backOffPolicy.setInitialInterval(config.retry().delayConfig().linear().initialIntervalDuration().toMillis());
-        backOffPolicy.setMaxInterval(config.retry().delayConfig().linear().maxIntervalDuration().toMillis());
+        backOffPolicy.setInitialInterval(config.retry().delay().linear().initialIntervalDuration().toMillis());
+        backOffPolicy.setMaxInterval(config.retry().delay().linear().maxIntervalDuration().toMillis());
         template.setRetryPolicy(retryPolicy);
         template.setBackOffPolicy(backOffPolicy);
         return template;
@@ -45,8 +45,8 @@ public class RetryBeanConfig {
         SimpleRetryPolicy policy = new SimpleRetryPolicy(config.retry().maxAttempts());
         ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
 
-        backOffPolicy.setInitialInterval(config.retry().delayConfig().exponential().initialIntervalDuration().toMillis());
-        backOffPolicy.setMaxInterval(config.retry().delayConfig().exponential().maxIntervalDuration().toMillis());
+        backOffPolicy.setInitialInterval(config.retry().delay().exponential().initialIntervalDuration().toMillis());
+        backOffPolicy.setMaxInterval(config.retry().delay().exponential().maxIntervalDuration().toMillis());
         template.setRetryPolicy(policy);
         template.setBackOffPolicy(backOffPolicy);
         return template;

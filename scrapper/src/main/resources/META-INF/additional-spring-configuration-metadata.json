@@ -46,27 +46,27 @@
       "description": "Description for app.retry.type."
     },
     {
-      "name": "app.retry.delay-config.fixed.back-off-duration",
+      "name": "app.retry.delay.fixed.interval-duration",
       "type": "java.lang.String",
       "description": "Description for app.retry.delay-config.fixed.back-off-duration."
     },
     {
-      "name": "app.retry.delay-config.linear.initial-interval-duration",
+      "name": "app.retry.delay.linear.initial-interval-duration",
       "type": "java.lang.String",
       "description": "Description for app.retry.delay-config.linear.initial-interval-duration."
     },
     {
-      "name": "app.retry.delay-config.linear.max-interval-duration",
+      "name": "app.retry.delay.linear.max-interval-duration",
       "type": "java.lang.String",
       "description": "Description for app.retry.delay-config.linear.max-interval-duration."
     },
     {
-      "name": "app.retry.delay-config.exponential.initial-interval-duration",
+      "name": "app.retry.delay.exponential.initial-interval-duration",
       "type": "java.lang.String",
       "description": "Description for app.retry.delay-config.exponential.initial-interval-duration."
     },
     {
-      "name": "app.retry.delay-config.exponential.max-interval-duration",
+      "name": "app.retry.delay.exponential.max-interval-duration",
       "type": "java.lang.String",
       "description": "Description for app.retry.delay-config.exponential.max-interval-duration."
     }

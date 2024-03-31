@@ -11,9 +11,9 @@ app:
   retry:
     max-attempts: 3
     type: linear
-    delay-config:
+    delay:
       fixed:
-        back-off-duration: 1s
+        interval-duration: 1s
       linear:
         initial-interval-duration: 1s
         max-interval-duration: 5s
