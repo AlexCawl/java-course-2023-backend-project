@@ -9,22 +9,60 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 public record ApplicationConfig(
     @NotNull
-    Scheduler scheduler,
+    SchedulerConfiguration scheduler,
 
     @NotNull
-    Api api,
+    ApiConfiguration api,
 
     @NotNull
-    AccessType databaseAccessType
+    DatabaseAccessType databaseAccessType,
+
+    @NotNull
+    NetworkRetryConfiguration retry
 ) {
-    public record Scheduler(boolean enable, @NotNull Duration interval, @NotNull Duration linkExpiration) {
+    public record SchedulerConfiguration(boolean enable, @NotNull Duration interval, @NotNull Duration linkExpiration) {
     }
 
-    public record Api(@NotNull String github, @NotNull String stackOverflow, @NotNull String bot) {
+    public record ApiConfiguration(@NotNull String github, @NotNull String stackOverflow, @NotNull String bot) {
     }
 
-    public enum AccessType {
+    public enum DatabaseAccessType {
         JDBC,
         JPA
+    }
+
+    public record NetworkRetryConfiguration(
+            Integer maxAttempts,
+            RetryType type,
+            NetworkDelayConfiguration delayConfig
+    ) {
+        public enum RetryType {
+            CONSTANT,
+            LINEAR,
+            EXPONENTIAL
+        }
+
+        public record NetworkDelayConfiguration(
+                ConstantDelayConfiguration constant,
+                LinearDelayConfiguration linear,
+                ExponentialDelayConfiguration exponential
+        ) {
+            public record ConstantDelayConfiguration(
+                    Duration backOffPeriodDuration
+            ) {
+            }
+
+            public record LinearDelayConfiguration(
+                    Duration initialIntervalDuration,
+                    Duration maxIntervalDuration
+            ) {
+            }
+
+            public record ExponentialDelayConfiguration(
+                    Duration initialIntervalDuration,
+                    Duration maxIntervalDuration
+            ) {
+            }
+        }
     }
 }

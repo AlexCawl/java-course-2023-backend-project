@@ -8,6 +8,18 @@ app:
     stack-overflow: https://api.stackexchange.com
     bot: http://localhost:8090
   database-access-type: jpa
+  retry:
+    max-attempts: 3
+    type: linear
+    delay-config:
+      fixed:
+        back-off-duration: 1s
+      linear:
+        initial-interval-duration: 1s
+        max-interval-duration: 5s
+      exponential:
+        initial-interval-duration: 1s
+        max-interval-duration: 100s
 
 spring:
   application:

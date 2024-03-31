@@ -34,6 +34,41 @@
       "name": "app.database-access-type",
       "type": "java.lang.String",
       "description": "Type of database access API. Can be either JDBC or JPA."
+    },
+    {
+      "name": "app.retry.max-attempts",
+      "type": "java.lang.String",
+      "description": "Description for app.retry.max-attempts."
+    },
+    {
+      "name": "app.retry.type",
+      "type": "java.lang.String",
+      "description": "Description for app.retry.type."
+    },
+    {
+      "name": "app.retry.delay-config.fixed.back-off-duration",
+      "type": "java.lang.String",
+      "description": "Description for app.retry.delay-config.fixed.back-off-duration."
+    },
+    {
+      "name": "app.retry.delay-config.linear.initial-interval-duration",
+      "type": "java.lang.String",
+      "description": "Description for app.retry.delay-config.linear.initial-interval-duration."
+    },
+    {
+      "name": "app.retry.delay-config.linear.max-interval-duration",
+      "type": "java.lang.String",
+      "description": "Description for app.retry.delay-config.linear.max-interval-duration."
+    },
+    {
+      "name": "app.retry.delay-config.exponential.initial-interval-duration",
+      "type": "java.lang.String",
+      "description": "Description for app.retry.delay-config.exponential.initial-interval-duration."
+    },
+    {
+      "name": "app.retry.delay-config.exponential.max-interval-duration",
+      "type": "java.lang.String",
+      "description": "Description for app.retry.delay-config.exponential.max-interval-duration."
     }
   ]
 }
