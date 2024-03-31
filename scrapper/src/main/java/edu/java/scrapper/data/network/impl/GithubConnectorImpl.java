@@ -6,16 +6,17 @@ import edu.java.core.util.ApiQualifier;
 import edu.java.scrapper.data.network.GithubConnector;
 import java.time.Duration;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.util.retry.Retry;
 
 @Component
 public class GithubConnectorImpl implements GithubConnector {
-    private final static int MAX_ATTEMPTS = 3;
-    private final static int DURATION = 200;
     private final WebClient webClient;
+    private RetryTemplate retryTemplate;
 
     public GithubConnectorImpl(@ApiQualifier("github") String baseUrl) {
         this.webClient = WebClient
@@ -24,25 +25,44 @@ public class GithubConnectorImpl implements GithubConnector {
                 .build();
     }
 
+    @Autowired
+    public void setRetryTemplate(RetryTemplate retryTemplate) {
+        this.retryTemplate = retryTemplate;
+    }
+
     @Override
     public RepositoryResponse fetchRepository(String username, String repository) {
+        if (retryTemplate == null) {
+            return internalFetchRepository(username, repository);
+        } else {
+            return retryTemplate.execute(context -> internalFetchRepository(username, repository));
+        }
+    }
+
+    @Override
+    public List<CommitResponse> fetchRepositoryCommits(String username, String repository) {
+        if (retryTemplate == null) {
+            return internalFetchRepositoryCommits(username, repository);
+        } else {
+            return retryTemplate.execute(context -> internalFetchRepositoryCommits(username, repository));
+        }
+    }
+
+    private RepositoryResponse internalFetchRepository(String username, String repository) {
         return webClient
                 .get()
                 .uri("/repos/{username}/{repository}", username, repository)
                 .retrieve()
                 .bodyToMono(RepositoryResponse.class)
-                .retryWhen(Retry.fixedDelay(MAX_ATTEMPTS, Duration.ofMillis(DURATION)))
                 .block();
     }
 
-    @Override
-    public List<CommitResponse> fetchRepositoryCommits(String username, String repository) {
+    private List<CommitResponse> internalFetchRepositoryCommits(String username, String repository) {
         return webClient
                 .get()
                 .uri("/repos/{username}/{repository}/commits", username, repository)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<CommitResponse>>() {})
-                .retryWhen(Retry.fixedDelay(MAX_ATTEMPTS, Duration.ofMillis(DURATION)))
                 .block();
     }
 }
