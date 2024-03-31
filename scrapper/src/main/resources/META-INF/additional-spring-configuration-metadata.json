@@ -38,37 +38,42 @@
     {
       "name": "app.retry.max-attempts",
       "type": "java.lang.String",
-      "description": "Description for app.retry.max-attempts."
+      "description": "Max retry attempts."
     },
     {
       "name": "app.retry.type",
       "type": "java.lang.String",
-      "description": "Description for app.retry.type."
+      "description": "Type of retry. Can be fixed, linear, exponential."
     },
     {
       "name": "app.retry.delay.fixed.interval-duration",
       "type": "java.lang.String",
-      "description": "Description for app.retry.delay-config.fixed.back-off-duration."
+      "description": "Fixed retry interval duration."
     },
     {
       "name": "app.retry.delay.linear.initial-interval-duration",
       "type": "java.lang.String",
-      "description": "Description for app.retry.delay-config.linear.initial-interval-duration."
+      "description": "Linear retry initial interval duration."
     },
     {
       "name": "app.retry.delay.linear.max-interval-duration",
       "type": "java.lang.String",
-      "description": "Description for app.retry.delay-config.linear.max-interval-duration."
+      "description": "Linear retry max interval duration."
     },
     {
       "name": "app.retry.delay.exponential.initial-interval-duration",
       "type": "java.lang.String",
-      "description": "Description for app.retry.delay-config.exponential.initial-interval-duration."
+      "description": "Exponential retry initial interval duration."
     },
     {
       "name": "app.retry.delay.exponential.max-interval-duration",
       "type": "java.lang.String",
-      "description": "Description for app.retry.delay-config.exponential.max-interval-duration."
+      "description": "Exponential retry max interval duration."
+    },
+    {
+      "name": "app.retry.codes",
+      "type": "java.util.Set<java.lang.Integer>",
+      "description": "Retry codes."
     }
   ]
 }

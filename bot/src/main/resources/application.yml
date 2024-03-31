@@ -1,6 +1,19 @@
 app:
   telegram-token: ${TOKEN}
   scrapper: http://localhost:8080/
+  retry:
+    max-attempts: 3
+    type: linear
+    codes: 500, 501, 502, 503, 429
+    delay:
+      fixed:
+        interval-duration: 1s
+      linear:
+        initial-interval-duration: 1s
+        max-interval-duration: 5s
+      exponential:
+        initial-interval-duration: 1s
+        max-interval-duration: 100s
 
 spring:
   application:

@@ -1,4 +1,4 @@
-package edu.java.scrapper.di;
+package edu.java.bot.di;
 
 import edu.java.core.retry.HttpCodeRetryPolicy;
 import edu.java.core.retry.LinearBackOffPolicy;

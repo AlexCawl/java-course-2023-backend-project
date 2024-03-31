@@ -11,6 +11,7 @@ app:
   retry:
     max-attempts: 3
     type: linear
+    codes: 500, 501, 502, 503, 429
     delay:
       fixed:
         interval-duration: 1s
