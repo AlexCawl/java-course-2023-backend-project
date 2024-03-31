@@ -23,6 +23,8 @@ app:
         max-interval-duration: 100s
 
 spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   application:
     name: scrapper
   datasource:
