@@ -37,17 +37,17 @@ public record ApplicationConfig(
             NetworkDelayConfiguration delayConfig
     ) {
         public enum RetryType {
-            CONSTANT,
+            FIXED,
             LINEAR,
             EXPONENTIAL
         }
 
         public record NetworkDelayConfiguration(
-                ConstantDelayConfiguration constant,
+                FixedDelayConfiguration fixed,
                 LinearDelayConfiguration linear,
                 ExponentialDelayConfiguration exponential
         ) {
-            public record ConstantDelayConfiguration(
+            public record FixedDelayConfiguration(
                     Duration backOffPeriodDuration
             ) {
             }
