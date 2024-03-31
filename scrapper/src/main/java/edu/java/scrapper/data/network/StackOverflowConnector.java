@@ -1,7 +1,10 @@
 package edu.java.scrapper.data.network;
 
-import edu.java.core.response.stackoverflow.StackOverflowAnswersResponse;
+import edu.java.core.response.stackoverflow.AnswerResponse;
+import edu.java.core.response.stackoverflow.CommentResponse;
 
 public interface StackOverflowConnector {
-    StackOverflowAnswersResponse fetchAnswers(String questionId);
+    AnswerResponse fetchAnswers(String questionId);
+
+    CommentResponse fetchComments(String questionId);
 }

@@ -1,17 +1,19 @@
 package edu.java.scrapper.domain.impl;
 
+import edu.java.core.exception.LinkCannotBeHandledException;
 import edu.java.core.request.LinkUpdateRequest;
-import edu.java.scrapper.data.db.LinkRepository;
-import edu.java.scrapper.data.db.TrackerRepository;
 import edu.java.scrapper.data.db.entity.Link;
 import edu.java.scrapper.data.db.entity.TelegramChat;
+import edu.java.scrapper.data.db.repository.BinderRepository;
+import edu.java.scrapper.data.db.repository.LinkRepository;
 import edu.java.scrapper.data.network.BaseClient;
 import edu.java.scrapper.data.network.NotificationConnector;
 import edu.java.scrapper.domain.ScrappingService;
+import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.util.Arrays;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -20,21 +22,38 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @ConditionalOnProperty(value = "app.scheduler.enable", havingValue = "true", matchIfMissing = true)
 public class ScrappingServiceImpl implements ScrappingService {
-    private final static Integer MINUTES = 10;
     private final List<BaseClient> scrapperClients;
     private final LinkRepository linkRepository;
-    private final TrackerRepository trackerRepository;
+    private final BinderRepository binderRepository;
     private final NotificationConnector notificationConnector;
+    private final Duration linkExpiration;
 
     public ScrappingServiceImpl(
             List<BaseClient> scrapperClients,
             LinkRepository linkRepository,
-            TrackerRepository trackerRepository, NotificationConnector notificationConnector
+            BinderRepository binderRepository,
+            NotificationConnector notificationConnector,
+            @Qualifier("expiration") Duration linkExpiration
     ) {
         this.scrapperClients = scrapperClients;
         this.linkRepository = linkRepository;
-        this.trackerRepository = trackerRepository;
+        this.binderRepository = binderRepository;
         this.notificationConnector = notificationConnector;
+        this.linkExpiration = linkExpiration;
+    }
+
+    @Override
+    @Scheduled(fixedDelayString = "#{@interval}")
+    public void schedule() {
+        try {
+            OffsetDateTime leastUpdateTime = OffsetDateTime.now().minusSeconds(linkExpiration.toSeconds());
+            linkRepository.getAllUpdatedBefore(leastUpdateTime)
+                    .stream()
+                    .filter(this::validate)
+                    .forEach(this::process);
+        } catch (Exception exception) {
+            log.error(this.getClass().getName(), exception);
+        }
     }
 
     private boolean validate(Link link) {
@@ -42,45 +61,37 @@ public class ScrappingServiceImpl implements ScrappingService {
     }
 
     private void process(Link link) {
-        scrapperClients.stream()
-                .filter(scrapperClient -> scrapperClient.canHandle(link.getUrl()))
-                .findAny()
-                .ifPresentOrElse(
-                        scrapperClient -> update(link, scrapperClient),
-                        () -> log.warn("No action for: " + link)
-                );
-    }
-
-    private void update(Link link, BaseClient scrapperClient) {
-        Link updatedLink = scrapperClient.handle(link);
-        linkRepository.updateTimeTouched(updatedLink);
-        notificationConnector.update(
-                new LinkUpdateRequest(
-                        link.getId(),
-                        link.getUrl(),
-                        "",
-                        trackerRepository.findAllChatsSubscribedTo(updatedLink)
-                                .stream()
-                                .map(TelegramChat::getId)
-                                .toList()
-                )
-        );
-    }
-
-    /**
-     * Schedule entrypoint for scrapping urls.
-     */
-    @Override
-    @Scheduled(fixedDelayString = "#{@interval}")
-    public void schedule() {
         try {
-            OffsetDateTime leastUpdateTime = OffsetDateTime.now().minusMinutes(MINUTES);
-            linkRepository.findAllLinksUpdatedBefore(leastUpdateTime)
-                    .stream()
-                    .filter(this::validate)
-                    .forEach(this::process);
-        } catch (Exception exception) {
-            log.error(this.getClass().getName(), Arrays.stream(exception.getStackTrace()).toList());
+            scrapperClients.stream()
+                    .filter(scrapperClient -> scrapperClient.canHandle(link))
+                    .findAny()
+                    .ifPresentOrElse(
+                            scrapperClient -> update(link, scrapperClient),
+                            () -> log.warn("No action for: " + link)
+                    );
+        } catch (LinkCannotBeHandledException exception) {
+            log.warn("Can't handle: " + link);
+        }
+    }
+
+    private void update(Link link, BaseClient scrapperClient) throws LinkCannotBeHandledException {
+        // Handle Link and get diff-message
+        String message = scrapperClient.handle(link);
+        // Update Link time
+        linkRepository.updateAndReturn(link.setLastUpdatedAt(OffsetDateTime.now()));
+        // Send if updated
+        if (message != null) {
+            notificationConnector.update(
+                    new LinkUpdateRequest(
+                            link.getId(),
+                            link.getUrl(),
+                            message,
+                            binderRepository.findAllChatsSubscribedTo(link)
+                                    .stream()
+                                    .map(TelegramChat::getId)
+                                    .toList()
+                    )
+            );
         }
     }
 }
