@@ -1,5 +1,6 @@
 package edu.java.scrapper.di;
 
+import edu.java.core.kafka.Kafka;
 import edu.java.core.retry.Retry;
 import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
@@ -19,7 +20,13 @@ public record ApplicationConfig(
         DatabaseAccessType databaseAccessType,
 
         @NotNull
-        Retry retry
+        Retry retry,
+
+        @NotNull
+        Kafka kafkaConfigInfo,
+
+        @NotNull
+        Boolean useQueue
 ) {
     public record Scheduler(boolean enable, @NotNull Duration interval, @NotNull Duration linkExpiration) {
     }
