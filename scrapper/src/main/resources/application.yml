@@ -8,8 +8,23 @@ app:
     stack-overflow: https://api.stackexchange.com
     bot: http://localhost:8090
   database-access-type: jpa
+  retry:
+    max-attempts: 3
+    type: linear
+    codes: 500, 501, 502, 503, 429
+    delay:
+      fixed:
+        interval-duration: 1s
+      linear:
+        initial-interval-duration: 1s
+        max-interval-duration: 5s
+      exponential:
+        initial-interval-duration: 1s
+        max-interval-duration: 100s
 
 spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   application:
     name: scrapper
   datasource:
@@ -19,6 +34,13 @@ spring:
     password: postgres
   liquibase:
     enabled: false
+  cache:
+    jcache:
+      provider: com.github.benmanes.caffeine.jcache.spi.CaffeineCachingProvider
+    caffeine:
+      spec: maximumSize=100000,expireAfterAccess=60s
+    cache-names:
+      - rate-limit-buckets-bot
 
 springdoc:
   swagger-ui:
@@ -29,3 +51,16 @@ server:
 
 logging:
   config: classpath:log4j2-plain.xml
+
+bucket4j:
+  enabled: true
+  filters:
+    - cache-name: rate-limit-buckets-bot
+      url: /.*
+      http-response-body: "{ \"status\": 429, \"error\": \"Too Many Requests\", \"message\": \"You have exhausted your API Request Quota\" }"
+      rate-limits:
+        - bandwidths:
+            - capacity: 100
+              time: 1
+              unit: minutes
+              refill-speed: interval

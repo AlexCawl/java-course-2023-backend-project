@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-@ConditionalOnProperty(value = "app.scheduler.enable", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "Scheduler", havingValue = "true", matchIfMissing = true)
 public class ScrappingServiceImpl implements ScrappingService {
     private final List<BaseClient> scrapperClients;
     private final LinkRepository linkRepository;

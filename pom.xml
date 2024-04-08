@@ -25,6 +25,8 @@
         <spring-cloud.version>2023.0.0</spring-cloud.version>
         <spring-doc.version>2.3.0</spring-doc.version>
         <spring-jdbc.version>3.2.2</spring-jdbc.version>
+        <spring-retry.version>2.0.5</spring-retry.version>
+        <caffeine.version>3.1.8</caffeine.version>
 
         <!-- Database -->
         <postgres.version>42.7.2</postgres.version>
@@ -33,6 +35,7 @@
         <!-- Other -->
         <jetbrains-annotations.version>24.1.0</jetbrains-annotations.version>
         <java-telegram-bot-api.version>7.0.1</java-telegram-bot-api.version>
+        <bucket4j.version>0.12.4</bucket4j.version>
 
         <!-- Tests -->
         <testcontainers.version>1.19.4</testcontainers.version>
@@ -68,6 +71,26 @@
                 <groupId>org.wiremock</groupId>
                 <artifactId>wiremock-standalone</artifactId>
                 <version>${wiremock.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.retry</groupId>
+                <artifactId>spring-retry</artifactId>
+                <version>${spring-retry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.giffing.bucket4j.spring.boot.starter</groupId>
+                <artifactId>bucket4j-spring-boot-starter</artifactId>
+                <version>${bucket4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>jcache</artifactId>
+                <version>${caffeine.version}</version>
             </dependency>
 
             <dependency>

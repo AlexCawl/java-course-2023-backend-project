@@ -1,9 +1,11 @@
 package edu.java.scrapper.di;
 
 import edu.java.core.util.ApiQualifier;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@EnableCaching
 @Configuration
 public class NetworkBeanConfig {
     @Bean

@@ -66,7 +66,7 @@ public class StackOverflowClientImpl
             contentRepository.upsert(new LinkContent(link.getId(), this.serialize(current), current.hashCode()));
             // Get difference
             List<String> differences = getDifference(previous, current);
-            return (differences.size() == 0)
+            return (differences.isEmpty())
                     ? null
                     : differences.stream().map(s -> s + "\n").collect(Collectors.joining());
         } catch (JsonProcessingException | IllegalStateException exception) {

@@ -19,6 +19,8 @@ public class TrackLinkUseCase {
             return new TelegramResponse("Link subscribed");
         } catch (ApiErrorException exception) {
             return new ErrorTelegramResponse(exception);
+        } catch (Exception exception) {
+            return new TelegramResponse(String.format("Unable to connect... [%s]", exception.getClass()));
         }
     }
 }
