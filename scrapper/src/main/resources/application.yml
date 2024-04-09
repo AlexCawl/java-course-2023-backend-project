@@ -27,7 +27,7 @@ app:
       name: scrapper.updates
       partitions: 2
       replicas: 1
-  use-queue: false
+  use-queue: true
 
 spring:
   jpa:
