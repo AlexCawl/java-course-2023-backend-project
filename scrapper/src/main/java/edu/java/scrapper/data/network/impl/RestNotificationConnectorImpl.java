@@ -7,15 +7,13 @@ import edu.java.core.util.ApiQualifier;
 import edu.java.scrapper.data.network.NotificationConnector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Slf4j
-@Repository
-public class NotificationConnectorImpl implements NotificationConnector {
+public class RestNotificationConnectorImpl implements NotificationConnector {
     private final WebClient webClient;
 
-    public NotificationConnectorImpl(@ApiQualifier("bot") String baseUrl) {
+    public RestNotificationConnectorImpl(@ApiQualifier("bot") String baseUrl) {
         this.webClient = WebClient.create(baseUrl);
     }
 

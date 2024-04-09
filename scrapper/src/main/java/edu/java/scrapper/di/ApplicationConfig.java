@@ -23,7 +23,7 @@ public record ApplicationConfig(
         Retry retry,
 
         @NotNull
-        Kafka kafkaConfigInfo,
+        Kafka kafka,
 
         @NotNull
         Boolean useQueue

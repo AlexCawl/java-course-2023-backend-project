@@ -16,11 +16,11 @@ app:
         max-interval-duration: 100s
   kafka:
     servers: ${DOCKER_HOST_IP:127.0.0.1}:9092
-    updates-topic:
+    updates:
       name: scrapper.updates
       partitions: 2
       replicas: 1
-  use-queue: true
+  use-queue: false
 
 spring:
   application:

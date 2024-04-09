@@ -67,10 +67,10 @@ public class ScrappingServiceImpl implements ScrappingService {
                     .findAny()
                     .ifPresentOrElse(
                             scrapperClient -> update(link, scrapperClient),
-                            () -> log.warn("No action for: " + link)
+                            () -> log.warn("No action for: {}", link)
                     );
         } catch (LinkCannotBeHandledException exception) {
-            log.warn("Can't handle: " + link);
+            log.warn("Can't handle: {}", link);
         }
     }
 

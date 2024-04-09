@@ -81,17 +81,17 @@
       "description": "Kafka servers hosts."
     },
     {
-      "name": "app.kafka.updates-topic.name",
+      "name": "app.kafka.updates.name",
       "type": "java.lang.String",
       "description": "Notification topic name."
     },
     {
-      "name": "app.kafka.updates-topic.partitions",
+      "name": "app.kafka.updates.partitions",
       "type": "java.lang.String",
       "description": "Notification topic partitions."
     },
     {
-      "name": "app.kafka.updates-topic.replicas",
+      "name": "app.kafka.updates.replicas",
       "type": "java.lang.String",
       "description": "Notification topic replicas."
     }
