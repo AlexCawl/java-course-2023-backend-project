@@ -1,49 +1,69 @@
 {
-    "properties": [
-        {
-            "name": "app.scrapper",
-            "type": "java.lang.String",
-            "description": "Endpoint for scrapper service."
-        },
-        {
-            "name": "app.retry.max-attempts",
-            "type": "java.lang.String",
-            "description": "Max retry attempts."
-        },
-        {
-            "name": "app.retry.type",
-            "type": "java.lang.String",
-            "description": "Type of retry. Can be fixed, linear, exponential."
-        },
-        {
-            "name": "app.retry.delay.fixed.interval-duration",
-            "type": "java.lang.String",
-            "description": "Fixed retry interval duration."
-        },
-        {
-            "name": "app.retry.delay.linear.initial-interval-duration",
-            "type": "java.lang.String",
-            "description": "Linear retry initial interval duration."
-        },
-        {
-            "name": "app.retry.delay.linear.max-interval-duration",
-            "type": "java.lang.String",
-            "description": "Linear retry max interval duration."
-        },
-        {
-            "name": "app.retry.delay.exponential.initial-interval-duration",
-            "type": "java.lang.String",
-            "description": "Exponential retry initial interval duration."
-        },
-        {
-            "name": "app.retry.delay.exponential.max-interval-duration",
-            "type": "java.lang.String",
-            "description": "Exponential retry max interval duration."
-        },
-        {
-            "name": "app.retry.codes",
-            "type": "java.util.Set<java.lang.Integer>",
-            "description": "Retry codes."
-        }
-    ]
+  "properties": [
+    {
+      "name": "app.scrapper",
+      "type": "java.lang.String",
+      "description": "Endpoint for scrapper service."
+    },
+    {
+      "name": "app.retry.max-attempts",
+      "type": "java.lang.String",
+      "description": "Max retry attempts."
+    },
+    {
+      "name": "app.retry.type",
+      "type": "java.lang.String",
+      "description": "Type of retry. Can be fixed, linear, exponential."
+    },
+    {
+      "name": "app.retry.delay.fixed.interval-duration",
+      "type": "java.lang.String",
+      "description": "Fixed retry interval duration."
+    },
+    {
+      "name": "app.retry.delay.linear.initial-interval-duration",
+      "type": "java.lang.String",
+      "description": "Linear retry initial interval duration."
+    },
+    {
+      "name": "app.retry.delay.linear.max-interval-duration",
+      "type": "java.lang.String",
+      "description": "Linear retry max interval duration."
+    },
+    {
+      "name": "app.retry.delay.exponential.initial-interval-duration",
+      "type": "java.lang.String",
+      "description": "Exponential retry initial interval duration."
+    },
+    {
+      "name": "app.retry.delay.exponential.max-interval-duration",
+      "type": "java.lang.String",
+      "description": "Exponential retry max interval duration."
+    },
+    {
+      "name": "app.retry.codes",
+      "type": "java.util.Set<java.lang.Integer>",
+      "description": "Retry codes."
+    },
+    {
+      "name": "app.kafka.servers",
+      "type": "java.lang.String",
+      "description": "Kafka servers hosts."
+    },
+    {
+      "name": "app.kafka.updates.name",
+      "type": "java.lang.String",
+      "description": "Notification topic name."
+    },
+    {
+      "name": "app.kafka.updates.partitions",
+      "type": "java.lang.String",
+      "description": "Notification topic partitions."
+    },
+    {
+      "name": "app.kafka.updates.replicas",
+      "type": "java.lang.String",
+      "description": "Notification topic replicas."
+    }
+  ]
 }

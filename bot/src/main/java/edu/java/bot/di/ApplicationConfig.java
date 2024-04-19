@@ -1,5 +1,6 @@
 package edu.java.bot.di;
 
+import edu.java.core.kafka.Kafka;
 import edu.java.core.retry.Retry;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +17,12 @@ public record ApplicationConfig(
         String scrapper,
 
         @NotNull
-        Retry retry
+        Retry retry,
+
+        @NotNull
+        Kafka kafka,
+
+        @NotNull
+        Boolean useQueue
 ) {
 }

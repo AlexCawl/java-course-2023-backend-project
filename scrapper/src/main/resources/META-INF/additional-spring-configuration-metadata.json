@@ -74,6 +74,26 @@
       "name": "app.retry.codes",
       "type": "java.util.Set<java.lang.Integer>",
       "description": "Retry codes."
+    },
+    {
+      "name": "app.kafka.servers",
+      "type": "java.lang.String",
+      "description": "Kafka servers hosts."
+    },
+    {
+      "name": "app.kafka.updates.name",
+      "type": "java.lang.String",
+      "description": "Notification topic name."
+    },
+    {
+      "name": "app.kafka.updates.partitions",
+      "type": "java.lang.String",
+      "description": "Notification topic partitions."
+    },
+    {
+      "name": "app.kafka.updates.replicas",
+      "type": "java.lang.String",
+      "description": "Notification topic replicas."
     }
   ]
 }
