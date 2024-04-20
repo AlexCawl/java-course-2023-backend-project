@@ -3,20 +3,46 @@
 
 # Link Tracker
 
-ФИО: Бабушкин Михаил Вадимович
+> Made by **Alexcawl** (Mikhail Babushkin)
 
-Приложение для отслеживания обновлений контента по ссылкам.
-При появлении новых событий отправляется уведомление в Telegram.
+> Telegram: [@fantasmagorius](https://t.me/fantasmagorius)
 
-Проект написан на `Java 21` с использованием `Spring Boot 3`.
+An application for tracking content updates via links.
+When new events occur, a notification is sent to the Telegram.
 
-Проект состоит из 2-х приложений:
+The project consists of 2 applications:
 
 * Bot
 * Scrapper
 
-Для работы требуется БД `PostgreSQL`. Присутствует опциональная зависимость на `Kafka`.
+## Tech-stack
 
-# Homework Tracker
+### Core
 
-# HW-1 (in progress)
+* `Java 21`
+* `Spring Boot 3`
+
+### Persistence
+
+Depends on the configuration. Both methods have been implemented. 
+
+Also `PostgreSQL` is used as the database.
+
+* `JDBC client`
+* `Spring Data JPA`
+
+### Service communication
+
+* `REST API`
+* `Apacha Kafka` (Optional)
+
+### Metrics
+
+* `Grafana | Prometheus`
+* `Spring Boot Actuator`
+* `Micrometer`
+
+### CI/CD
+
+* `GitHub Actions`
+* `Docker | Docker-compose`
