@@ -23,6 +23,22 @@ public record ApplicationConfig(
         Kafka kafka,
 
         @NotNull
-        Boolean useQueue
+        Boolean useQueue,
+
+        @NotNull
+        Micrometer micrometer
 ) {
+    public record Micrometer(
+        @NotNull
+        ProcessedMessagesCounter counter
+    ) {
+        public record ProcessedMessagesCounter(
+            @NotNull
+            String name,
+
+            @NotNull
+            String description
+        ) {
+        }
+    }
 }

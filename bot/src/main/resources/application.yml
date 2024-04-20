@@ -21,6 +21,10 @@ app:
       partitions: 2
       replicas: 1
   use-queue: false
+  micrometer:
+    counter:
+      name: messages.processed
+      description: Количество обработанных сообщений
 
 spring:
   application:
