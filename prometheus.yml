@@ -1,6 +1,6 @@
 scrape_configs:
   - job_name: 'Link Tracker'
-    scrape_interval: 5s
+    scrape_interval: 10s
     metrics_path: /metrics
     static_configs:
       - targets: ['172.17.0.1:8081', '172.17.0.1:8091'] # linux specific hosts

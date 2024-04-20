@@ -7,7 +7,7 @@ app:
     github: https://api.github.com
     stack-overflow: https://api.stackexchange.com
     bot: http://localhost:8090
-  database-access-type: jpa
+  database-access-type: jdbc
   retry:
     max-attempts: 3
     type: linear
@@ -79,7 +79,7 @@ management:
     web:
       base-path: /
       exposure:
-        include: health,info,prometheus
+        include: health, info, prometheus
       path-mapping:
         prometheus: metrics
   metrics:
