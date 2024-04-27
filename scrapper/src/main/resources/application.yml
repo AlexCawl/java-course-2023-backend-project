@@ -7,7 +7,7 @@ app:
     github: https://api.github.com
     stack-overflow: https://api.stackexchange.com
     bot: http://localhost:8090
-  database-access-type: jpa
+  database-access-type: jdbc
   retry:
     max-attempts: 3
     type: linear
@@ -27,7 +27,7 @@ app:
       name: scrapper.updates
       partitions: 2
       replicas: 1
-  use-queue: true
+  use-queue: false
 
 spring:
   jpa:
@@ -71,3 +71,17 @@ bucket4j:
               time: 1
               unit: minutes
               refill-speed: interval
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health, info, prometheus
+      path-mapping:
+        prometheus: metrics
+  metrics:
+    tags:
+      application: ${spring.application.name}
